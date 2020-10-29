@@ -24,7 +24,7 @@ var timeTask map[int]TaskData
 func Init(){
 	timmers = make(chan Task)
 	timeTask = make(map[int]TaskData)
-	timmerChannleRead(timmers)
+	go timmerChannleRead()
 }
 
 // AddTask asda
@@ -40,11 +40,11 @@ func Close(){
 	close(timmers)
 }
 
-func timmerChannleRead(ch <- chan Task){
+func timmerChannleRead(){
 	for {
 		select {
-		case channelTask := <-ch:
-			func(task Task) {
+		case channelTask := <-timmers:
+			go func(task Task) {
 				<-task.T.C
 				//fmt.Println("task : ",task.time)
 				//WriteFile(f, task.time)
@@ -63,5 +63,5 @@ func DeleteTask(index int){
 	if _, ok := timeTask[index]; ok {
 		delete(timeTask, index)
 	}
-	fmt.Println(timeTask)
+	fmt.Println("delete :", timeTask)
 }
