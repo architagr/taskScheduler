@@ -21,10 +21,10 @@ var timmers chan Task
 var timeTask map[int]TaskData
 
 // Init to initilize the schedule
-func Init(){
+func Init(calback func()){
 	timmers = make(chan Task)
 	timeTask = make(map[int]TaskData)
-	go timmerChannleRead()
+	go timmerChannleRead(calback)
 }
 
 // AddTask asda
@@ -40,22 +40,34 @@ func Close(){
 	close(timmers)
 }
 
-func timmerChannleRead(){
-	for {
-		select {
-		case channelTask := <-timmers:
-			go func(task Task) {
-				<-task.T.C
-				//fmt.Println("task : ",task.time)
-				//WriteFile(f, task.time)
-				if taskdata, ok := timeTask[task.index]; ok{
-					taskdata.CallBack(taskdata.Data, task.index)
-				}
-				
-				//DeleteTask(task)
-			}(channelTask)
-		}
+func timmerChannleRead(calback func()){
+	for channelTask := range <-timmers{
+		go func(task Task) {
+			<-task.T.C
+			//fmt.Println("task : ",task.time)
+			//WriteFile(f, task.time)
+			if taskdata, ok := timeTask[task.index]; ok{
+				taskdata.CallBack(taskdata.Data, task.index)
+			}
+			//DeleteTask(task)
+		}(channelTask)
 	}
+	defer calback()
+	// for {
+	// 	select {
+	// 	case channelTask := <-timmers:
+	// 		go func(task Task) {
+	// 			<-task.T.C
+	// 			//fmt.Println("task : ",task.time)
+	// 			//WriteFile(f, task.time)
+	// 			if taskdata, ok := timeTask[task.index]; ok{
+	// 				taskdata.CallBack(taskdata.Data, task.index)
+	// 			}
+				
+	// 			//DeleteTask(task)
+	// 		}(channelTask)
+	// 	}
+	// }
 }
 
 // DeleteTask sd
