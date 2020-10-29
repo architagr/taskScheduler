@@ -41,7 +41,7 @@ func Close(){
 }
 
 func timmerChannleRead(calback func()){
-	for channelTask := range <-timmers{
+	for channelTask := range timmers{
 		go func(task Task) {
 			<-task.T.C
 			//fmt.Println("task : ",task.time)
