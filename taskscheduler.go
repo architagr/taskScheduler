@@ -52,7 +52,6 @@ var channels map[string]channel = make(map[string]channel)
 // so that the function can implement logic to receive data
 // we have a limit of 10 message in the channel
 func AddChannel(name string, f func(ch <-chan ChannelData)) (bool, error) {
-	fmt.Printf("All:%d , running:%d, cancled:%d, stopped:%d, completed: %d", all, running,cancled,stopped,completed)
 	if _, ok := channels[name]; ok {
 		return false, fmt.Errorf("%s name already exists", name)
 	}
