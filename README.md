@@ -1,6 +1,6 @@
 # taskScheduler
 
-This library cna be used at places where you want to create task that have to be executed after some perticular time duration.
+This library can be used at places where you want to create tasks that have to be executed after some particular time duration.
 
 To use this you have to 1st call the AddChannel function sending in the channel name and a function that have a read only channel as a input (to listen to this channel).
 
