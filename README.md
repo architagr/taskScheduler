@@ -28,6 +28,6 @@ func <b>receiveDataChannel1(ch <-chan ts.ChannelData)</b> {<br/>
 
 func <b>main()</b>{<br/>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt.Println("run")<br/>
-    <i>go configureChannel()</i>
-    time.Sleep(time.Second*time.Duration(60))<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>go configureChannel()</i><br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time.Sleep(time.Second*time.Duration(60))<br/>
 }<br/>
