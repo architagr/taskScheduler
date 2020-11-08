@@ -10,22 +10,24 @@ for example if we are configuring this in a project then -
 
 In main.go I have created a function configureChannel() that is run as a goroutine in the main function 
 
-func configureChannel() {
-	taskscheduler.AddChannel("channel1", receiveDataChannel1)
-	ok, ID, err := taskscheduler.AddTask("channel1", time.Second*time.Duration(10), "data1")
-	if !ok {
-		fmt.Println("error adding task:",err)
-	} else {
-		fmt.Println("no error adding task", ID)
-	}
-}
+func <b>configureChannel()</b> {<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;taskscheduler.AddChannel("channel1", <i>receiveDataChannel1</i>)<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok, ID, err := taskscheduler.AddTask("channel1", time.Second*time.Duration(10), "data1")<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if !ok {<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt.Println("error adding task:",err)<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt.Println("no error adding task", ID)<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+}<br/><br/>
 
-func receiveDataChannel1(ch <-chan ts.ChannelData) {
-	for channelTask := range ch {
-		fmt.Println("received data:",channelTask.Data,"for task id :", channelTask.ID)
-	}
-}
+func <b>receiveDataChannel1(ch <-chan ts.ChannelData)</b> {<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for channelTask := range ch {<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt.Println("received data:",channelTask.Data,"for task id :", channelTask.ID)<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+}<br/>
 
-func main(){
-    fmt.Println("run")
-}
+func <b>main()</b>{<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt.Println("run")<br/>
+    <i>go configureChannel()</i>
+    time.Sleep(time.Second*time.Duration(60))
+}<br/>
